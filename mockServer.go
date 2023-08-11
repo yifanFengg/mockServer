@@ -37,6 +37,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 	if requestCount > 100 {
 		http.Error(w, "Too many requests", http.StatusTooManyRequests)
+		log.Println("Too many requests,wait for a while")
 		return
 	}
 
