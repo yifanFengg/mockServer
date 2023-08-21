@@ -27,9 +27,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 	requestCount++
 
-	if requestCount%100 == 0 {
-		errorCount = 0
-	}
+	//if requestCount%100 == 0 {
+	//	errorCount = 0
+	//}
 	//if r.Method != http.MethodPost {
 	//	http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 	//	return
@@ -40,10 +40,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	//	return
 	//}
 
-	if errorCount < 80 && requestCount%100 < 80 {
+	if requestCount%100 < 80 {
 		http.Error(w, "too many requests", http.StatusTooManyRequests)
 		log.Println("Too many requests,wait for a while")
-		errorCount++
 		return
 	}
 
@@ -64,7 +63,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 func main() {
 	// Open a log file
 	successfulRequest = 0
-	errorCount = 0
 	logFile, err := os.OpenFile("server.log", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
 	if err != nil {
 		fmt.Println("Error opening log file:", err)
@@ -75,7 +73,7 @@ func main() {
 	// Set log output to the file
 	log.SetOutput(logFile)
 
-	resetTime = time.Now()
+	//resetTime = time.Now()
 
 	http.HandleFunc("/", handler)
 
